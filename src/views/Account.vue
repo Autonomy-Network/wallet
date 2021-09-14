@@ -47,7 +47,9 @@
               <div class="account-container_actions_button_wrapper" :id="`${asset}_send_button`">
                 <SendIcon class="account-container_actions_button_icon"/>
               </div>
-              Send
+              <div>
+                Send
+              </div>
             </button>
           </router-link>
           <router-link :to="`/accounts/${accountId}/${asset}/swap`">
@@ -66,7 +68,41 @@
               Receive
             </button>
           </router-link>
+          <router-link :to="`/accounts/${accountId}/${asset}/limit-order`">
+            <button class="account-container_actions_button">
+              <div class="account-container_actions_button_wrapper" :id="`${asset}_swap_button`">
+                <SwapIcon class="account-container_actions_button_icon account-container_actions_button_swap"/>
+              </div>
+              Limit Order
+            </button>
+          </router-link>
+          <router-link :to="`/accounts/${accountId}/${asset}/swap`">
+            <button class="account-container_actions_button">
+              <div class="account-container_actions_button_wrapper" :id="`${asset}_swap_button`">
+                <SwapIcon class="account-container_actions_button_icon account-container_actions_button_swap"/>
+              </div>
+              Stop Loss
+            </button>
+          </router-link>
         </div>
+        <!-- <div class="account-container_actions">
+          <router-link :to="`/accounts/${accountId}/${asset}/swap`">
+            <button class="account-container_actions_button">
+              <div class="account-container_actions_button_wrapper" :id="`${asset}_swap_button`">
+                <SwapIcon class="account-container_actions_button_icon account-container_actions_button_swap"/>
+              </div>
+              Limit Order
+            </button>
+          </router-link>
+          <router-link :to="`/accounts/${accountId}/${asset}/swap`">
+            <button class="account-container_actions_button">
+              <div class="account-container_actions_button_wrapper" :id="`${asset}_swap_button`">
+                <SwapIcon class="account-container_actions_button_icon account-container_actions_button_swap"/>
+              </div>
+              Stop Loss
+            </button>
+          </router-link>
+        </div> -->
       </div>
       <div class="account-container_transactions">
         <ActivityFilter @filters-changed="applyFilters"
@@ -297,7 +333,7 @@ export default {
   &_actions {
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
     margin: 0 auto;
 
     &_button {
