@@ -39,7 +39,25 @@
             :amount-option="amountOption"
             @send-amount-change="setSendAmount"
           />
-
+          <LimitInput
+            class="mt-30"
+            :account="account"
+            :asset="asset"
+            :limit-amount="sendAmount"
+            :limit-amount-fiat="sendAmountFiat"
+            @update:sendAmount="(amount) => (sendAmount = amount)"
+            @update:sendAmountFiat="(amount) => (sendAmountFiat = amount)"
+            :max="dpUI(max)"
+            :min="min"
+            :available="dpUI(available)"
+            :max-fiat="prettyFiatBalance(max, fiatRates[asset])"
+            :min-fiat="prettyFiatBalance(min, fiatRates[asset])"
+            :show-errors="showErrors"
+            :amount-error="amountError"
+            @from-asset-click="fromAssetClick"
+            :amount-option="amountOption"
+            @send-amount-change="setSendAmount"
+          />
           <ReceiveInput
             class="mt-30"
             :account="toAccount"
@@ -339,6 +357,7 @@ import SwapIcon from '@/assets/icons/arrow_swap.svg'
 import SpinnerIcon from '@/assets/icons/spinner.svg'
 import DetailsContainer from '@/components/DetailsContainer'
 import SendInput from './SendInput'
+import LimitInput from './LimitInput'
 import ReceiveInput from './ReceiveInput'
 import Accounts from './Accounts'
 import QuotesModal from './QuotesModal'
@@ -367,6 +386,7 @@ export default {
     SpinnerIcon,
     DetailsContainer,
     SendInput,
+    LimitInput,
     ReceiveInput,
     Accounts,
     SwapProviderLabel,
