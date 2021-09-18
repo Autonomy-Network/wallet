@@ -5,10 +5,10 @@
         <div class="swap-send-main-input">
           <div class="swap-send-top">
           <div class="swap-send-top-label">
-            Price
+            Limit
           </div>
-          <div class="swap-send-top-amount">
-            <div class="btn btn-option label-append" @click="toggleShowAmountsFiat">
+          <div class="swap-send-top-amount" style="display:none">
+            <div class="btn btn-option label-append" >
               <span :style="getAssetColorStyle(asset)">
                 Current
               </span>
@@ -16,24 +16,12 @@
           </div>
       </div>
         <input
-          v-if="showAmountsInFiat"
-          type="text"
-          class="form-control"
-          :class="{ 'is-invalid': showErrors && amountError }"
-          :value="sendAmountFiat"
-          @input="$emit('update:sendAmountFiat', $event.target.value)"
-          placeholder="0.00"
-          autocomplete="off"
-          :disabled="disabled"
-        />
-        <input
-          v-else
           type="number"
           class="form-control"
-          id="swap_send_amount_input_field"
+          id="swap_limit_amount_input_field"
           :class="{ 'is-invalid': showErrors && amountError }"
-          :value="sendAmount"
-          @input="$emit('update:sendAmount', $event.target.value)"
+          :value="limitAmount"
+          @input="$emit('update:limitAmount', $event.target.value)"
           placeholder="0.00"
           :style="getAssetColorStyle(asset)"
           autocomplete="off"
@@ -45,10 +33,6 @@
         <small class="text-danger form-text text-right">
           {{ amountError }}
         </small>
-      </div>
-    </div>
-    <div class="swap-send-bottom">
-      <div class="swap-send-bottom-options">
       </div>
     </div>
   </div>
@@ -67,19 +51,13 @@ export default {
   },
   data () {
     return {
-      showAmountsInFiat: false
     }
   },
   props: [
     'account',
     'asset',
     'available',
-    'sendAmount',
-    'sendAmountFiat',
-    'min',
-    'max',
-    'minFiat',
-    'maxFiat',
+    'limitAmount',
     'showErrors',
     'amountError',
     'disabled',
@@ -90,15 +68,6 @@ export default {
     dpUI,
     getAssetColorStyle,
     getAssetIcon,
-    toggleShowAmountsFiat () {
-      this.showAmountsInFiat = !this.showAmountsInFiat
-    },
-    setSendAmount (amount) {
-      this.$emit('send-amount-change', amount)
-    },
-    assetIconClick () {
-      this.$emit('from-asset-click')
-    }
   }
 }
 </script>
@@ -165,20 +134,6 @@ export default {
     .swap-send-main-errors {
       display: flex;
       width: 100%;
-    }
-
-  }
-
-  .swap-send-bottom {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-
-    .swap-send-bottom-available {
-      line-height: 15px;
-      text-transform: none;
-      font-weight: normal;
-      font-size: $font-size-tiny;
     }
 
   }

@@ -42,21 +42,11 @@
           <LimitInput
             class="mt-30"
             :account="account"
-            :asset="asset"
-            :limit-amount="sendAmount"
-            :limit-amount-fiat="sendAmountFiat"
-            @update:sendAmount="(amount) => (sendAmount = amount)"
-            @update:sendAmountFiat="(amount) => (sendAmountFiat = amount)"
-            :max="dpUI(max)"
-            :min="min"
-            :available="dpUI(available)"
-            :max-fiat="prettyFiatBalance(max, fiatRates[asset])"
-            :min-fiat="prettyFiatBalance(min, fiatRates[asset])"
-            :show-errors="showErrors"
+            :limit-amount="limitAmount"
+            @update:limitAmount="(amount) => (limitAmount = amount)"
             :amount-error="amountError"
-            @from-asset-click="fromAssetClick"
             :amount-option="amountOption"
-            @send-amount-change="setSendAmount"
+            @limit-amount-change="setLimitAmount"
           />
           <ReceiveInput
             class="mt-30"
@@ -424,7 +414,8 @@ export default {
       swapErrorMessage: '',
       customFeeAssetSelected: null,
       customFees: {},
-      bridgeModalOpen: false
+      bridgeModalOpen: false,
+      stateLimitAmount: 0,
     }
   },
   props: {
@@ -502,6 +493,18 @@ export default {
           this.stateSendAmount,
           this.fiatRates[this.asset]
         )
+      }
+    },
+    limitAmount: {
+      get () {
+        return this.stateLimitAmount
+      },
+      set (newValue) {
+        if (newValue && !isNaN(newValue)) {
+          this.stateLimitAmount = newValue
+        } else {
+          this.stateLimitAmount = 0.0
+        }
       }
     },
     sendAmountFiat: {
@@ -735,6 +738,11 @@ export default {
       } else if (amount === this.min) {
         this.amountOption = 'min'
       }
+      console.log('asdasd')
+    },
+    setLimitAmount (amount) {
+      this.limitAmount = amount
+      console.log('qwe')
     },
     setToAsset (toAsset) {
       this.toAsset = toAsset
