@@ -56,18 +56,16 @@ export default {
   props: [
     'account',
     'asset',
-    'available',
     'limitAmount',
     'showErrors',
     'amountError',
     'disabled',
-    'amountOption'
   ],
   created () {},
   methods: {
     dpUI,
     getAssetColorStyle,
-    getAssetIcon,
+    getAssetIcon
   }
 }
 </script>

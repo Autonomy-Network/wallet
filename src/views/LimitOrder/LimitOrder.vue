@@ -30,7 +30,6 @@
             @update:sendAmountFiat="(amount) => (sendAmountFiat = amount)"
             :max="dpUI(max)"
             :min="min"
-            :available="dpUI(available)"
             :max-fiat="prettyFiatBalance(max, fiatRates[asset])"
             :min-fiat="prettyFiatBalance(min, fiatRates[asset])"
             :show-errors="showErrors"
@@ -45,7 +44,6 @@
             :limit-amount="limitAmount"
             @update:limitAmount="(amount) => (limitAmount = amount)"
             :amount-error="amountError"
-            :amount-option="amountOption"
             @limit-amount-change="setLimitAmount"
           />
           <ReceiveInput
@@ -415,7 +413,7 @@ export default {
       customFeeAssetSelected: null,
       customFees: {},
       bridgeModalOpen: false,
-      stateLimitAmount: 0,
+      stateLimitAmount: 0
     }
   },
   props: {
@@ -483,6 +481,7 @@ export default {
         return this.stateSendAmount
       },
       set (newValue) {
+        console.log('123')
         if (newValue && !isNaN(newValue)) {
           this.stateSendAmount = newValue
         } else {
@@ -518,6 +517,7 @@ export default {
       }
     },
     receiveAmount () {
+      console.log('asd')
       return this.selectedQuote ? unitToCurrency(cryptoassets[this.toAsset], this.selectedQuote.toAmount) : BN(0)
     },
     receiveAmountFiat () {
@@ -967,6 +967,7 @@ export default {
       this.currentStep = 'inputs'
     },
     toAssetClick () {
+      console.log('qwe')
       this.assetSelection = 'to'
       this.currentStep = 'accounts'
     },
