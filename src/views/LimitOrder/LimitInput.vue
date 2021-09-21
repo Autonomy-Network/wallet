@@ -41,13 +41,13 @@
 <script>
 import { getAssetColorStyle, getAssetIcon } from '@/utils/asset'
 import { dpUI } from '@/utils/coinFormatter'
-import ChevronRightIcon from '@/assets/icons/chevron_right_gray.svg'
-import AccountTooltip from '@/components/AccountTooltip'
+// import ChevronRightIcon from '@/assets/icons/chevron_right_gray.svg'
+// import AccountTooltip from '@/components/AccountTooltip'
 
 export default {
   components: {
-    ChevronRightIcon,
-    AccountTooltip
+    // ChevronRightIcon,
+    // AccountTooltip
   },
   data () {
     return {
@@ -59,7 +59,7 @@ export default {
     'limitAmount',
     'showErrors',
     'amountError',
-    'disabled',
+    'disabled'
   ],
   created () {},
   methods: {
