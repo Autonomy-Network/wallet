@@ -76,7 +76,7 @@
               Limit Order
             </button>
           </router-link>
-          <router-link :to="`/accounts/${accountId}/${asset}/swap`">
+          <router-link :to="`/accounts/${accountId}/${asset}/stop-loss`">
             <button class="account-container_actions_button">
               <div class="account-container_actions_button_wrapper" :id="`${asset}_swap_button`">
                 <SwapIcon class="account-container_actions_button_icon account-container_actions_button_swap"/>

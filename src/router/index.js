@@ -13,6 +13,7 @@ import Send from '@/views/Send/Send.vue'
 import Receive from '@/views/Receive.vue'
 import Swap from '@/views/Swap/Swap.vue'
 import LimitOrder from '@/views/LimitOrder/LimitOrder.vue'
+import StopLoss from '@/views/StopLoss/StopLoss.vue'
 
 import Settings from '@/views/Settings'
 import ManageAssets from '@/views/ManageAssets'
@@ -152,9 +153,16 @@ const routes = [
   },
 
   {
-    name: 'Swap',
+    name: 'LimitOrder',
     path: '/accounts/:accountId/:routeAsset/limit-order',
     component: LimitOrder,
+    props: true
+  },
+
+  {
+    name: 'StopLoss',
+    path: '/accounts/:accountId/:routeAsset/stop-loss',
+    component: StopLoss,
     props: true
   },
 
