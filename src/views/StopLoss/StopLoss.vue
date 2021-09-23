@@ -10,7 +10,7 @@
         "
         :backLabel="routeSource === 'assets' ? 'Overview' : asset"
       >
-        Limit Order
+        Stop Loss
       </NavBar>
       <InfoNotification v-if="ethRequired">
         <EthRequiredMessage :account-id="account.id"/>
@@ -646,7 +646,7 @@ export default {
       if (!this.selectedQuote ||
           this.updatingQuotes ||
           this.ethRequired ||
-          this.stateLimitAmount > this.send ||
+          this.stateLimitAmount > this.quoteRate ||
           this.showNoLiquidityMessage ||
           this.amountError ||
           BN(this.safeAmount).lte(0)) {
