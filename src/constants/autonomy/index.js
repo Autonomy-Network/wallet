@@ -1,14 +1,12 @@
-const  ChainId = {
-  MAINNET: 56,
-  BSCTESTNET: 97
-}
+import { ChainId } from '@liquality/cryptoassets'
+
 
 /**
  * Autonomy Registry Contract
  * !! Only for BSC Mainnet/Testnet
  */
 export const REGISTRY_CONTRACT_ADDRESS = {
-  [ChainId.MAINNET]: '0x18d087F8D22D409D3CD366AF00BD7AeF0BF225Db',
+  [ChainId.BinanceSmartChain]: '0x18d087F8D22D409D3CD366AF00BD7AeF0BF225Db',
   [ChainId.BSCTESTNET]: '0x0a92B53e97D5da0ba8253c9015fFef0F9D9cd750'
 }
 
@@ -17,7 +15,7 @@ export const REGISTRY_CONTRACT_ADDRESS = {
   * !! Only for BSC Mainnet/Testnet
   */
 export const MIDROUTER_CONTRACT_ADDRESS = {
-  [ChainId.MAINNET]: '0x151394FBa85A10E7A669f07818aC408b9abb8e09',
+  [ChainId.BinanceSmartChain]: '0x151394FBa85A10E7A669f07818aC408b9abb8e09',
   [ChainId.BSCTESTNET]: '0x57c11ED54e9980E2b02cd6C08fB317d8fF47CA4e'
 }
 

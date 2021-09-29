@@ -21,6 +21,16 @@
       </InfoNotification>
       <div class="wrapper form">
         <div class="wrapper_top">
+          <div class="wrapper_setting  mb-2">
+            <div class="toggle_item_swap_type mt-2" id="limit_order_toggle_button">
+            <div>Limit Order</div>
+              <toggle-button v-model="enabledLimitOrder" :css-colors="true" :value="false" :sync="true" @change="e => toggleLimitOrder(e.value)"/>
+            </div>
+            <div class="toggle_item_swap_type mt-2" id="stop_loss_toggle_button">
+              <div>Stop Loss</div>
+              <toggle-button v-model="enabledStopLoss" :css-colors="true" :value="false" :sync="true" @change="e => toggleStopLoss(e.value)"/>
+            </div>
+          </div>
           <SendInput
             :account="account"
             :asset="asset"
@@ -39,7 +49,14 @@
             :amount-option="amountOption"
             @send-amount-change="setSendAmount"
           />
-
+          <LimitInput
+            class="mt-30"
+            :account="account"
+            :limit-amount="limitAmount"
+            @update:limitAmount="(amount) => (limitAmount = amount)"
+            :amount-error="amountError"
+            @limit-amount-change="setLimitAmount"
+          />
           <ReceiveInput
             class="mt-30"
             :account="toAccount"
@@ -339,6 +356,7 @@ import SwapIcon from '@/assets/icons/arrow_swap.svg'
 import SpinnerIcon from '@/assets/icons/spinner.svg'
 import DetailsContainer from '@/components/DetailsContainer'
 import SendInput from './SendInput'
+import LimitInput from './LimitInput'
 import ReceiveInput from './ReceiveInput'
 import Accounts from './Accounts'
 import QuotesModal from './QuotesModal'
@@ -367,6 +385,7 @@ export default {
     SpinnerIcon,
     DetailsContainer,
     SendInput,
+    LimitInput,
     ReceiveInput,
     Accounts,
     SwapProviderLabel,
@@ -404,7 +423,10 @@ export default {
       swapErrorMessage: '',
       customFeeAssetSelected: null,
       customFees: {},
-      bridgeModalOpen: false
+      bridgeModalOpen: false,
+      enabledLimitOrder: false,
+      enabledStopLoss: false,
+      stateLimitAmount: 0
     }
   },
   props: {
@@ -492,6 +514,18 @@ export default {
         const value = (newValue || '0').replace('$', '')
         this.stateSendAmountFiat = value
         this.stateSendAmount = fiatToCrypto(value, this.fiatRates[this.asset])
+      }
+    },
+    limitAmount: {
+      get () {
+        return this.stateLimitAmount
+      },
+      set (newValue) {
+        if (newValue && !isNaN(newValue)) {
+          this.stateLimitAmount = newValue
+        } else {
+          this.stateLimitAmount = 0.0
+        }
       }
     },
     receiveAmount () {
@@ -625,6 +659,8 @@ export default {
       if (!this.selectedQuote ||
           this.updatingQuotes ||
           this.ethRequired ||
+          (this.stateLimitAmount < this.quoteRate && this.enabledLimitOrder) ||
+          (this.stateLimitAmount > this.quoteRate && this.enabledStopLoss) ||
           this.showNoLiquidityMessage ||
           this.amountError ||
           BN(this.safeAmount).lte(0)) {
@@ -715,6 +751,9 @@ export default {
       } else if (amount === this.min) {
         this.amountOption = 'min'
       }
+    },
+    setLimitAmount (amount) {
+      this.limitAmount = amount
     },
     setToAsset (toAsset) {
       this.toAsset = toAsset
@@ -1011,7 +1050,21 @@ export default {
     closeBridgeModal () {
       this.loading = false
       this.bridgeModalOpen = false
-    }
+    },
+    toggleLimitOrder (enable) {
+      console.log(enable);
+      this.enabledLimitOrder = enable
+      if ( enable ) {
+        this.enabledStopLoss = false
+        console.log(this.enabledStopLoss);
+      }
+    },
+    toggleStopLoss (enable) {
+      this.enabledStopLoss = enable;
+      if ( enable ) {
+        this.enabledLimitOrder = false
+      }
+    },
   },
   watch: {
     selectedFee: {
@@ -1050,6 +1103,9 @@ export default {
     selectedQuote: function () {
       this._updateSwapFees() // Skip debounce
       this.updateMaxSwapFees()
+    },
+    quoteRate: function (val) {
+      this.stateLimitAmount = dpUI(val)
     },
     currentStep: function (val) {
       if (val === 'inputs') this.updateQuotes()
@@ -1137,6 +1193,20 @@ export default {
     height: 18px;
     &.up {
       transform: rotate(180deg);
+    }
+  }
+}
+
+.wrapper_setting {
+  display: flex;
+  flex-direction: column;
+  
+  .toggle_item_swap_type {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      width: 70%;
     }
   }
 }

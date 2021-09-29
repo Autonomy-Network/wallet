@@ -757,7 +757,6 @@ export default {
       // this.limitAmount = this.quoteRate
     },
     setFromAsset (asset) {
-      console.log('setFromAsset')
       this.asset = asset
       this.sendAmount = dpUI(this.defaultAmount)
       this.resetFees()
@@ -969,10 +968,12 @@ export default {
       this.currentStep = 'inputs'
     },
     toAssetClick () {
+      console.log('toAssetClick')
       this.assetSelection = 'to'
       this.currentStep = 'accounts'
     },
     fromAssetClick () {
+      console.log('fromAssetClick')
       this.assetSelection = 'from'
       this.currentStep = 'accounts'
     },
@@ -985,6 +986,8 @@ export default {
       this.setToAsset(toAsset)
     },
     assetChanged ({ accountId, asset }) {
+      console.log(accountId, asset, 'assetChanged')
+      console.log(this.account.chain)
       if (this.assetSelection === 'to') {
         this.toAssetChanged(accountId, asset)
       } else {
