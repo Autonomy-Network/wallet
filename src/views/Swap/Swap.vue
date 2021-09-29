@@ -50,6 +50,7 @@
             @send-amount-change="setSendAmount"
           />
           <LimitInput
+            v-if="enabledLimitOrder || enabledStopLoss"
             class="mt-30"
             :account="account"
             :limit-amount="limitAmount"
