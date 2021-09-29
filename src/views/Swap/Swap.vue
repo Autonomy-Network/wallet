@@ -1052,19 +1052,17 @@ export default {
       this.bridgeModalOpen = false
     },
     toggleLimitOrder (enable) {
-      console.log(enable);
       this.enabledLimitOrder = enable
-      if ( enable ) {
+      if (enable) {
         this.enabledStopLoss = false
-        console.log(this.enabledStopLoss);
       }
     },
     toggleStopLoss (enable) {
-      this.enabledStopLoss = enable;
-      if ( enable ) {
+      this.enabledStopLoss = enable
+      if (enable) {
         this.enabledLimitOrder = false
       }
-    },
+    }
   },
   watch: {
     selectedFee: {
@@ -1200,7 +1198,7 @@ export default {
 .wrapper_setting {
   display: flex;
   flex-direction: column;
-  
+
   .toggle_item_swap_type {
     display: flex;
     justify-content: space-between;

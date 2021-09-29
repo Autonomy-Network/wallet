@@ -1,6 +1,5 @@
 import { ChainId } from '@liquality/cryptoassets'
 
-
 /**
  * Autonomy Registry Contract
  * !! Only for BSC Mainnet/Testnet
