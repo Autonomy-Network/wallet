@@ -22,8 +22,12 @@
       <div class="wrapper form">
         <div class="wrapper_top">
           <div class="wrapper_setting  mb-2">
+            <div class="toggle_item_swap_type mt-2" id="normal_swap_toggle_button">
+              <div>Swap</div>
+              <toggle-button v-model="enabledNormalSwap" :css-colors="true" :value="true" :sync="true" @change="e => toggleNormalSwap(e.value)"/>
+            </div>
             <div class="toggle_item_swap_type mt-2" id="limit_order_toggle_button">
-            <div>Limit Order</div>
+              <div>Limit Order</div>
               <toggle-button v-model="enabledLimitOrder" :css-colors="true" :value="false" :sync="true" @change="e => toggleLimitOrder(e.value)"/>
             </div>
             <div class="toggle_item_swap_type mt-2" id="stop_loss_toggle_button">
@@ -425,6 +429,7 @@ export default {
       customFeeAssetSelected: null,
       customFees: {},
       bridgeModalOpen: false,
+      enabledNormalSwap: true,
       enabledLimitOrder: false,
       enabledStopLoss: false,
       stateLimitAmount: 0
@@ -1052,16 +1057,25 @@ export default {
       this.loading = false
       this.bridgeModalOpen = false
     },
+    toggleNormalSwap (enable) {
+      this.enabledNormalSwap = enable
+      if (enable) {
+        this.enabledStopLoss = false
+        this.enabledLimitOrder = false
+      }
+    },
     toggleLimitOrder (enable) {
       this.enabledLimitOrder = enable
       if (enable) {
         this.enabledStopLoss = false
+        this.enabledNormalSwap = false
       }
     },
     toggleStopLoss (enable) {
       this.enabledStopLoss = enable
       if (enable) {
         this.enabledLimitOrder = false
+        this.enabledNormalSwap = false
       }
     }
   },
@@ -1073,6 +1087,16 @@ export default {
         }
       },
       deep: true
+    },
+    enabledLimitOrder: function (val) {
+      if (!val && !this.enabledStopLoss) {
+        this.enabledNormalSwap = true
+      }
+    },
+    enabledStopLoss: function (val) {
+      if (!val && !this.enabledLimitOrder) {
+        this.enabledNormalSwap = true
+      }
     },
     stateSendAmount: function (val, oldVal) {
       if (BN(val).eq(oldVal)) return
