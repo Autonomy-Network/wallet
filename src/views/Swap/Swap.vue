@@ -23,16 +23,16 @@
         <div class="wrapper_top">
           <div class="wrapper_setting  mb-2">
             <div class="toggle_item_swap_type mt-2" id="normal_swap_toggle_button">
-              <div>Swap</div>
               <toggle-button v-model="enabledNormalSwap" :css-colors="true" :value="true" :sync="true" @change="e => toggleNormalSwap(e.value)"/>
+              <div class="mt-1 text-center " :class="{'text-primary': enabledNormalSwap }">Swap</div>
             </div>
             <div class="toggle_item_swap_type mt-2" id="limit_order_toggle_button">
-              <div>Limit Order</div>
               <toggle-button v-model="enabledLimitOrder" :css-colors="true" :value="false" :sync="true" @change="e => toggleLimitOrder(e.value)"/>
+              <div class="mt-1 text-center" :class="{'text-primary': enabledLimitOrder }">Limit Order</div>
             </div>
             <div class="toggle_item_swap_type mt-2" id="stop_loss_toggle_button">
-              <div>Stop Loss</div>
               <toggle-button v-model="enabledStopLoss" :css-colors="true" :value="false" :sync="true" @change="e => toggleStopLoss(e.value)"/>
+              <div class="mt-1 text-center" :class="{'text-primary': enabledStopLoss }">Stop Loss</div>
             </div>
           </div>
           <SendInput
@@ -1222,14 +1222,24 @@ export default {
 
 .wrapper_setting {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
 
   .toggle_item_swap_type {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    width: 33.33%;
 
     label {
-      width: 70%;
+      width: auto;
+      margin: auto;
+    }
+
+    div {
+      font-weight: 700;
+    }
+
+    .active {
     }
   }
 }
